@@ -44,6 +44,7 @@ def call_llm(system_prompt, user_prompt):
             {"role": "user", "content": user_prompt}
         ],
         temperature=0.3
+        response_format={"type": "json_object"} 
     )
     return response.choices[0].message.content
 
@@ -85,7 +86,7 @@ def review_sop(request: SOPRequest):
     if final_data is None:
         return {"error": "Rewriter agent returned invalid JSON"}
 
-    # FINAL RESPONSE-
+    # FINAL RESPONSE
     return {
         "review": final_data
         #"validation_feedback": feedback_data 
