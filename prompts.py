@@ -18,15 +18,33 @@ CRITICAL REVIEW QUESTIONS:
 - Is there balance between technical clarity and readability?
 - Are weaknesses (low GPA, gaps) handled maturely?
 
-OUTPUT FORMAT:
-1. Executive Summary (3–5 sentences)
-2. Structural Evaluation (Hook, Narrative, Why Program, Vision)
-3. Logical Flow & Transition Analysis
-4. Strengths (Specific, evidence-based)
-5. Weaknesses (Specific and constructive)
-6. Empty Claims Flagged (Quote + Why Weak)
-7. Tone & Professionalism Check
-8. Overall Admission Impression (Top 10%, Competitive, Borderline, Weak)
+Return ONLY valid JSON in the following format:
+
+{
+  "executive_summary": "string (3–5 sentences)",
+  "structural_evaluation": {
+    "hook": "evaluation",
+    "narrative": "evaluation",
+    "why_program": "evaluation",
+    "vision": "evaluation"
+  },
+  "logical_flow_and_transition": "analysis",
+  "strengths": ["point1", "point2"],
+  "weaknesses": ["point1", "point2"],
+  "empty_claims_flagged": [
+    {
+      "claim": "quoted text",
+      "reason": "why it is weak"
+    }
+  ],
+  "tone_and_professionalism": "evaluation",
+  "overall_admission_impression": "Top 10% / Competitive / Borderline / Weak"
+}
+
+Rules:
+- Do NOT add any text outside JSON
+- Do NOT explain the format
+- Output strictly valid JSON
 """
 
 validator_prompt = """
@@ -48,11 +66,20 @@ Check for:
 If something is weak, explain exactly why.
 If something is missing, specify what is missing.
 
-OUTPUT FORMAT:
-1. What Was Done Well in the Review
-2. What Is Missing or Weak
-3. How to Improve the Review
-4. Final Verdict on Review Quality (Excellent / Good / Needs Improvement / Poor)
+Return ONLY valid JSON in the following format:
+
+{
+  "what_was_done_well": ["point1", "point2"],
+  "what_is_missing_or_weak": ["point1", "point2"],
+  "how_to_improve": ["point1", "point2"],
+  "final_verdict": "Excellent / Good / Needs Improvement / Poor"
+}
+
+Rules:
+- Do NOT evaluate the SOP
+- Only evaluate the review
+- Do NOT add text outside JSON
+- Output strictly valid JSON
 """
 
 rewriter_prompt = """
@@ -68,5 +95,31 @@ Requirements:
 - Remove vague criticism
 - Keep the output structured and polished
 
-Deliver a final, refined, high-quality SOP review.
+Return ONLY valid JSON in the following format:
+
+{
+  "executive_summary": "string",
+  "structural_evaluation": {
+    "hook": "evaluation",
+    "narrative": "evaluation",
+    "why_program": "evaluation",
+    "vision": "evaluation"
+  },
+  "logical_flow_and_transition": "analysis",
+  "strengths": ["point1", "point2"],
+  "weaknesses": ["point1", "point2"],
+  "empty_claims_flagged": [
+    {
+      "claim": "quoted text",
+      "reason": "why it is weak"
+    }
+  ],
+  "tone_and_professionalism": "evaluation",
+  "overall_admission_impression": "Top 10% / Competitive / Borderline / Weak"
+}
+
+Rules:
+- Do NOT add extra text
+- Do NOT change structure
+- Output strictly valid JSON
 """
